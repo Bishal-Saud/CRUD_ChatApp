@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import { User } from "../models/user.model.js";
-import { sendToken } from "../utils/features.js";
+import { cookieOption, sendToken } from "../utils/features.js";
 import { TryCatch } from "../middlewares/error.js";
 import { ErrorHandler } from "../utils/utility.js";
 // Create a new user and save it to the database and save token to cookie
@@ -49,6 +49,25 @@ const getMyProfile = TryCatch(async (req, res) => {
     data: user,
   });
 });
-const logout = (req, res, next) => {};
+const logout = (req, res, next) => {
+  return res
+    .status(200)
+    .cookie("chattu-token", "", { ...cookieOption, maxAge: 0 })
+    .json({
+      success: true,
+      message: "logout successfully",
+    });
+};
 
-export { login, newUser, getMyProfile, logout };
+const searchUser = TryCatch(async (req, res, next) => {
+  const { name } = req.query;
+
+  return res
+    .status(200)
+
+    .json({
+      success: true,
+      message: name,
+    });
+});
+export { login, newUser, getMyProfile, logout, searchUser };
