@@ -12,6 +12,7 @@ dotenv.config({
 });
 
 const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT || 3000;
 connectDB(MONGO_URI);
 
 // createUser(10);
@@ -20,7 +21,7 @@ const app = express();
 // Using middleware here
 app.use(express.json());
 app.use(cookieParser());
-const PORT = process.env.PORT || 3000;
+// Routes
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
 
